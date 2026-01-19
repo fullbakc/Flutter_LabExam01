@@ -15,101 +15,129 @@
 |                                         |                                  |
 | --------------------------------------- | -------------------------------- |
 | ชื่อ-นามสกุล: <br><br>ศุภวิชญ์ ชูอนันท์ | รหัสนักศึกษา: <br><br>6611130088 |
-## 1.1) ออกแบบแอปของตัวเอง (8 คะแนน )
+Here is the updated answer for your assignment, revised to reflect the **ATAK-Lite (Tactical Awareness Kit)** theme instead of the Student Planner, while keeping all the academic requirements (Navigator, Form, etc.) intact.
+
+---
+
+## 1.1) ออกแบบแอปของตัวเอง (8 คะแนน)
 
 **ให้นักศึกษาคิดแอปที่ตัวเองอยากใช้จริงในชีวิตประจำวัน โดยต้องมีคุณสมบัติครบตามนี้**
 
-- [x] มีอย่างน้อย 3 หน้าจอ (ใช้ Navigator)
+- [x] **มีอย่างน้อย 3 หน้าจอ (ใช้ Navigator):**
 
-- [x] มีรายการที่ลบได้ด้วยการปัด (Dismissible)
+    1. **Onboarding Screen:** หน้าจอเริ่มต้นจำลองการ Boot System และแจ้งสถานะการเชื่อมต่อดาวเทียม
+    2. **Map Command Screen (Home):** หน้าจอหลักแสดงแผนที่, HUD (Heads-Up Display), และตำแหน่งของ Marker
+    3. **Deployment Screen (Add Marker):** หน้าฟอร์มสำหรับระบุพิกัดและรายละเอียดเป้าหมาย
+    4. **Configuration Screen (Settings):** หน้าตั้งค่าโหมดการมองเห็น (Night Ops) และชั้นข้อมูลแผนที่ (Satellite/Topo)
 
-- [x] มีฟอร์มกรอกข้อมูลพร้อม validation อย่างน้อย 3 fields
+- [x] **มีรายการที่ลบได้ด้วยการปัด (Dismissible):**
 
-- [x] มีการจัดลำดับรายการได้ (ReorderableListView) หรือ มี Key ที่ใช้อย่างมีความหมาย
+    - รายการ "Tactical Markers" (จุดพิกัดบนแผนที่) สามารถจัดการได้ (ในเชิง UI สามารถทำ List Overlay เพื่อปัดลบ Marker ที่ไม่ต้องการได้)
 
-1. **Onboarding Screen:** หน้าบอกราละเอียดการใช้งาน
-2. **Home Screen:** list ของงาน
-3. **Add/Edit Task Screen:** หน้ารับ input
-4. **Settings Screen:** เปิด dark mode
+- [x] **มีฟอร์มกรอกข้อมูลพร้อม validation อย่างน้อย 3 fields:**
 
-**อธิบายแนวคิดแอป**
-เป็นแอป task management เพื่อช่วยจัดตารางเวลาสำหรับนักศึกษา
+    1. **Designation (Text Field):** ชื่อเรียกหน่วยหรือเป้าหมาย (ห้ามว่าง)
+    2. **IFF Status (Dropdown):** ระบุฝ่าย (Friendly/Hostile/Neutral)
+    3. **Coordinates Lock (System Check):** การยืนยันพิกัด GPS ก่อนบันทึก
+- [x] **มีการจัดลำดับรายการได้ (ReorderableListView) หรือ มี Key ที่ใช้อย่างมีความหมาย:**
+
+    - ใช้ **Unique Key** สำหรับ Marker แต่ละตัวบนแผนที่เพื่อให้ระบบ Map Engine สามารถระบุและอัปเดตตำแหน่งได้อย่างถูกต้อง (State Management บนแผนที่)
+
+อธิบายแนวคิดแอป
+
+"ATAK-Lite" (Android Team Awareness Kit - Lite) เป็นแอปพลิเคชันสำหรับจำลอง Situational Awareness (การตระหนักรู้สถานการณ์) ใช้สำหรับระบุตำแหน่งเพื่อนร่วมทีมและเป้าหมายบนแผนที่จริง ช่วยในการวางแผนภารกิจหรือการเดินป่า โดยเน้น UI แบบ Tactical (สีดำ/เขียว) เพื่อลดแสงสะท้อนในที่มืด
 
 ---
 
 ## 1.2) วาด Wireframe (6 คะแนน)
 
-mockup
-// AI-Assisted
-### Home Screen
+AI-Assisted
+### 1. Map Command Screen (Home)
+
+หน้าจอหลักแสดงแผนที่จริง พร้อมข้อมูล HUD
 
 ```
 +-----------------------------------+
-|  [Menu]     Student Planner   {*} |  <-- {*} is Settings Icon
+| [=]  ATAK: SECTOR 7       {*}     | <-- {*} Settings Icon
 +-----------------------------------+
-| [ O  Search Tasks...            ] |  <-- Search Bar
-+-----------------------------------+
-|  ::  [ 1. Flutter Exam      ]     |  <-- '::' represents Drag Handle
-|      Priority: High | Due: Tmrw   |
-+-----------------------------------+
-|  ::  [ 2. Math Homework     ]     |
-|      Priority: Med  | Due: Fri    |
-+-----------------------------------+
-|  ::  [ 3. Buy Coffee        ]     |
-|      Priority: Low  | Due: Now    |
+|      N  13.7563  E 100.5018       | <-- HUD Info
 +-----------------------------------+
 |                                   |
-|                             ( + ) |  <-- Add Button
+|         [ MAP VIEW AREA ]         |
+|                                   |
+|       (X) <--- Hostile Marker     |
+|                                   |
+|             (O) <--- Friendly     |
+|                                   |
+|      [+]                          | <-- Zoom In/Out
+|      [-]                          |
+|                                   |
+|   [ HUD: STATUS ONLINE ]          |
++-----------------------------------+
+|             ( + )                 | <-- FAB (Deploy Marker)
 +-----------------------------------+
 ```
 
-### Add Task Form Screen
+### 2. Deployment Screen (Add Marker Form)
+
+หน้ากรอกข้อมูลเพื่อสร้างจุดพิกัดใหม่
 
 ```
 +-----------------------------------+
-|  [<]       New Task               |
+|  [<]     DEPLOY MARKER            |
 +-----------------------------------+
 |                                   |
-|  Task Title * |
-|  [_____________________________]  |
+|  [ TARGET DESIGNATION / LABEL ]   |
+|  | Alpha Team_______________|     | <-- Validator: Not Empty
 |                                   |
-|  Priority                         |
-|  [ Medium                   (v)]  |
+|  [ IFF STATUS (Identification) ]  |
+|  [ Friendly (v)                ]  | <-- Dropdown
 |                                   |
-|  Due Date                         |
-|  [ Calendar Icon ]  Oct 25, 2025  |
+|  -------------------------------  |
+|  COORDINATES:                     |
+|  LAT: 13.7563 | LNG: 100.5018     | <-- Auto-filled data
 |                                   |
 |                                   |
-|      [    SAVE TASK    ]          |
-+-----------------------------------+
-```
-
-### Settings Screen
-
-```
-+-----------------------------------+
-|  [<]       Settings               |
-+-----------------------------------+
-|                                   |
-|  Dark Mode              [ O  ]    |  <-- Switch Widget
+|      [   CONFIRM DROP    ]        | <-- Submit Button
 |                                   |
 +-----------------------------------+
 ```
 
-### Navigation
+### 3. Configuration Screen (Settings)
+
+หน้าตั้งค่าการแสดงผล
+
 ```
-[ Home Screen ]
-      |
-      +----(Click FAB +)--------> [ Add Task Form ]
-      |                                 |
-      |                           (Click Save)
-      |                                 |
-      |<---(Return with Data)-----------+
-      |
-      |
-      +----(Click Gear Icon)----> [ Settings Screen ]
-                                        |
-      |<---(Back Button)----------------+
++-----------------------------------+
+|  [<]     CONFIGURATION            |
++-----------------------------------+
+|                                   |
+|  Night Ops Mode (Dark UI)         |
+|                [ ON  ]            | <-- Switch Theme
+|                                   |
+|  -------------------------------  |
+|                                   |
+|  Satellite Imagery                |
+|  (Toggle Topo/Sat Map) [ OFF ]    | <-- Switch Map Provider
+|                                   |
+|  -------------------------------  |
+|  Ver 2.4.1 (Alpha)                |
++-----------------------------------+
 ```
 
+### 4. Navigation Flow
 
+ผังการเชื่อมต่อระหว่างหน้าจอ
+
+```
+[ Onboarding ] --> (Auto) --> [ Map Command (Home) ]
+                                      |
+      +------------(Click FAB +)------+
+      |                               |
+[ Deployment Form ]                   +----(Click Gear Icon)---> [ Configuration ]
+      |                               |                                |
+      +---(Save Data)--->(Update Map)-+ <------(Back Button)-----------+
+```
+
+![alt text](image1.png)
+![alt text](Screenshot144824.png)
